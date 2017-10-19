@@ -96,19 +96,17 @@ class app {
             console.log(data);
             if(data.object === 'page') {
 
-                for (let request of data.entry) {
+                data.entry.forEach(function(entry){
 
-                    var pageId = request.id;
-                    var eventTime = request.time;
-                    for (let event of request.messaging) {
+                    entry.messaging.forEach(function(event){
 
                         if (event.message) {
                             this.proceedEvents(event);
                         } else {
                             console.log("Message not found in event: ", event);
                         }
-                    }
-                }
+                    });
+                });
             }
             res.sendStatus(200);
         });
