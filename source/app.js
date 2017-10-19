@@ -5,7 +5,9 @@ class app {
         const express = require('express');
 
         this.context = express();
-        this.port = process.env.PORT | 5000;
+        this.port = 5000;
+
+        this.context.set('port', (process.env.PORT || this.port));
 
         this.context.get('/webhook', function(req, res) {
 
@@ -45,10 +47,10 @@ class app {
         });
 
         this.context.get('*', function (req, res){
-            res.status(404).send({"message":"route not found"});
+            res.status(200).send({"message":"it's running but wrong way dude!"});
         });
 
-        console.log("App port is %d", this.port);
+        console.log("Environment port is %d", process.env.PORT);
     };
 
     sendToMesseger(message) {
