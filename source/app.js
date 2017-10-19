@@ -7,8 +7,6 @@ class app {
         this.context = express();
         this.port = 5000;
 
-        this.context.set('port', (process.env.PORT || this.port));
-
         this.context.get('/webhook', function(req, res) {
 
             if (req.query['hub.mode'] === 'subscribe' &&
@@ -84,7 +82,7 @@ class app {
     };
 
     start() {
-        this.context.listen(this.port);
+        this.context.listen((process.env.PORT || this.port), '0.0.0.0');
     };
 }
 
