@@ -5,11 +5,16 @@ class app {
         const express = require('express');
         const bodyParser = require('body-parser');
 
+        var rawBodySaver = function (req, res, buf, encoding) {
+            if (buf && buf.length) {
+                req.rawBody = buf.toString(encoding || 'utf8');
+            }
+        };
+
         this.context = express();
-        this.context.use(bodyParser.json());
-        this.context.use(bodyParser.urlencoded({
-                extended: true
-            }));
+        this.context.use(bodyParser.json({ verify: rawBodySaver }));
+        this.context.use(bodyParser.urlencoded({ verify: rawBodySaver, extended: true }));
+        this.context.use(bodyParser.raw({ verify: rawBodySaver, type: function () { return true } }));
 
         this.port = 5000;
 
@@ -93,7 +98,7 @@ class app {
 
             var data = req.body;
 
-            console.log(data);
+            console.log(req.rawBody);
             if(data.object === 'page') {
 
                 data.entry.forEach(function(entry){
