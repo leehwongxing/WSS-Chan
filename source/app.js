@@ -3,8 +3,11 @@ class app {
     constructor() {
 
         const express = require('express');
+        const bodyParser = require('body-parser');
 
         this.context = express();
+        this.context.use(bodyParser);
+
         this.port = 5000;
 
         this.context.get('/webhook', function(req, res) {
