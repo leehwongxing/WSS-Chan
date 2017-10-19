@@ -96,15 +96,18 @@ class app {
 
         this.context.post('/webhook', function (req, res) {
 
-            var data = req.body;
+            let data = req.body;
 
             console.log(req.rawBody);
+            console.log(data.object);
             if(data.object === 'page') {
 
                 data.entry.forEach(function(entry){
+                    console.log(entry);
 
                     entry.messaging.forEach(function(event){
 
+                        console.log(event);
                         if (event.message) {
                             this.proceedEvents(event);
                         } else {
