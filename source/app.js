@@ -68,15 +68,13 @@ class app {
 
                 console.log("Message %s is successfully sent to %s", messageId, recipient);
             } else {
-                console.log("Unable to delivery message");
-                console.log(response);
-                console.log(error);
+                console.log("Unable to delivery message", response, error);
             }
         })
     };
 
     graphVersion() {
-        return 'v2.10';
+        return 'v2.10'; /// thiếu "v" là không chạy
     };
 
     graphApi() {
@@ -86,7 +84,6 @@ class app {
     start() {
 
         var appContext = this;
-
         this.context.get('/webhook', function(req, res) {
 
             if (req.query['hub.mode'] === 'subscribe' &&
@@ -104,20 +101,13 @@ class app {
 
             let data = req.body;
 
-            console.log(req.rawBody);
-            console.log(data.object);
             if(data.object === 'page') {
-
                 data.entry.forEach(function(entry){
-
                     entry.messaging.forEach(function(event){
 
-                        console.log(event);
                         if (event.message) {
-
                             appContext.proceedEvents(event);
                         } else {
-
                             console.log("Message not found in event: ", event);
                         }
                     });
