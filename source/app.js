@@ -76,7 +76,7 @@ class app {
     };
 
     graphVersion() {
-        return '2.10';
+        return 'v2.10';
     };
 
     graphApi() {
