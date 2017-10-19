@@ -81,6 +81,8 @@ class app {
 
     start() {
 
+        var appContext = this;
+
         this.context.get('/webhook', function(req, res) {
 
             if (req.query['hub.mode'] === 'subscribe' &&
@@ -103,14 +105,15 @@ class app {
             if(data.object === 'page') {
 
                 data.entry.forEach(function(entry){
-                    console.log(entry);
 
                     entry.messaging.forEach(function(event){
 
                         console.log(event);
                         if (event.message) {
-                            this.proceedEvents(event);
+
+                            appContext.proceedEvents(event);
                         } else {
+
                             console.log("Message not found in event: ", event);
                         }
                     });
