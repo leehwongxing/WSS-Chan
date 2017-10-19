@@ -6,7 +6,10 @@ class app {
         const bodyParser = require('body-parser');
 
         this.context = express();
-        this.context.use(bodyParser);
+        this.context.use(bodyParser.json());
+        this.context.use(bodyParser.urlencoded({
+                extended: true
+            }));
 
         this.port = 5000;
 
