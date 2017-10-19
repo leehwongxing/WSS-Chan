@@ -5,7 +5,7 @@ class app {
         const express = require('express');
 
         this.context = express();
-        this.port = process.env.APP_PORT | 8080;
+        this.port = process.env.PORT || 5000;
 
         this.context.get('/webhook', function(req, res) {
 
