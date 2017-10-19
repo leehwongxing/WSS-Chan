@@ -24,6 +24,8 @@ class app {
     // Xử lí tất cả các loại message ở tại đây
     proceedEvents(event) {
 
+        var appContext = this;
+
         console.log("Proceeding event: ", event);
         if (event.postback) {
 
@@ -37,19 +39,21 @@ class app {
 
                 let message = {
                     recipient: {
-                        id: event.recipient.id
+                        id: event.sender.id
                     },
                     message: {
                         text: event.message.text
                     }
                 };
-                this.sendToMessenger(message);
+                appContext.sendToMessenger(message);
                 return;
             }
         }
     };
 
     sendToMessenger(message) {
+
+        const request = require('request');
         request({
             uri: this.graphApi(),
             qs:{ access_token: process.env.PAGEACCESSTOKEN },
