@@ -2,9 +2,9 @@
   "name": "wss-chan",
   "version": "0.0.1",
   "description": "Just Another Bot",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "run": "node ./source/server.js"
   },
   "repository": {
     "type": "git",
@@ -15,10 +15,17 @@
     "wss",
     "wss-chan"
   ],
+  "engines": {
+    "node": "8.7.0"
+  },
   "author": "leehwongxing",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/leehwongxing/WSS-Chan/issues"
   },
-  "homepage": "https://github.com/leehwongxing/WSS-Chan#readme"
+  "homepage": "https://github.com/leehwongxing/WSS-Chan#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "request": "^2.83.0"
+  }
 }
