@@ -23,6 +23,8 @@ class app {
         this.context.post('/webhook', function (req, res) {
 
             var data = req.body;
+
+            console.log(data);
             if(data.object === 'page') {
 
                 for (let request of data.entry) {
@@ -31,12 +33,10 @@ class app {
                     var eventTime = request.time;
                     for (let event of request.messaging) {
 
-                        console.log(event);
-
                         if (event.message) {
-                            // sự kiện nhận biết được
+                            this.proceedEvents(event);
                         } else {
-                            // Sự kiện không nhận biết được
+                            console.log("Message not found in event: ", event);
                         }
                     }
                 }
@@ -51,7 +51,35 @@ class app {
         console.log("Environment port is %d", process.env.PORT);
     };
 
-    sendToMesseger(message) {
+    // Xử lí tất cả các loại message ở tại đây
+    proceedEvents(event) {
+
+        console.log("Proceeding event: ", event);
+        if (event.postback) {
+
+            let payload = event.postback.payload;
+
+            // xử lí sự kiện postback
+            return;
+        } else {
+
+            if (event.message && event.message.text) {
+
+                let message = {
+                    recipient: {
+                        id: event.recipient.id
+                    },
+                    message: {
+                        text: event.message.text
+                    }
+                };
+                this.sendToMessenger(message);
+                return;
+            }
+        }
+    };
+
+    sendToMessenger(message) {
         request({
             uri: this.graphApi(),
             qs:{ access_token: process.env.PAGEACCESSTOKEN },
